@@ -33,6 +33,9 @@
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",
     "eslint-config-universe": "^11.0.0",
+    "eslint-plugin-import-helpers": "^1.2.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.2",
     "typescript": "~4.3.5"
   },
