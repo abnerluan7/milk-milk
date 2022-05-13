@@ -6,7 +6,10 @@
       "Components/*": ["components/*"],
       "Libs/*": ["libs/*"],
       "Services/*": ["services/*"],
-      "Types/*": ["types/*"]
+      "Types/*": ["types/*"],
+      "Providers/*": ["providers/*"],
+      "Schemas/*": ["schemas/*"],
+      "Screens/*": ["screens/*"]
     }
   },
   "include": ["src/**/*"]

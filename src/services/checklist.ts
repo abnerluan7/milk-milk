@@ -1,10 +1,10 @@
-import { api } from 'Libs/axios';
+import { api } from 'Libs/api';
 import { CheckList } from 'Types/Checklist';
 import { ResponseSuccess } from 'Types/Response';
 
 export const getAllCheckLists = async (): ResponseSuccess<CheckList[]> => {
   try {
-    return api.get('/v1/checkList');
+    return api.get(process.env.ROUTE_CHECKLIST);
   } catch (err) {
     return Promise.reject(err);
   }
