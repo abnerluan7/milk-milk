@@ -13,6 +13,7 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
     "@types/styled-components": "^5.1.25",
+    "axios": "^0.27.2",
     "babel-plugin-inline-dotenv": "^1.7.0",
     "expo": "~45.0.0",
     "expo-constants": "~13.1.1",

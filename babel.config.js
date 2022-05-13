@@ -8,6 +8,9 @@ module.exports = function (api) {
         {
           alias: {
             Components: './src/components',
+            Libs: './src/libs',
+            Services: './src/services',
+            Types: './src/types',
           },
         },
       ],
