@@ -7,7 +7,7 @@ import { Button } from 'Components';
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>Open up App.tsx to start working on your app! {process.env.REALM_APP_ID}</Text>
       <Button />
       <StatusBar style="auto" />
     </View>
