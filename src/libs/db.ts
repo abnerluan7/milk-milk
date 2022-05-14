@@ -2,7 +2,7 @@ import Realm, { Configuration } from 'realm';
 
 import { Milk } from 'Schemas/MilkSchema';
 
-const app = new Realm.App({ id: 'milk-farm-vicus' });
+const app = new Realm.App({ id: process.env.REALM_APP_ID });
 
 const OpenRealmBehaviorConfiguration = {
   type: 'openImmediately',
