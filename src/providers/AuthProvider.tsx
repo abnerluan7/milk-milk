@@ -1,6 +1,8 @@
-import app from 'Libs/db';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import Realm from 'realm';
+
+import app from 'Libs/db';
+
 import { AuthContextType } from 'Types/Auth';
 
 const AuthContext = React.createContext<AuthContextType>({} as AuthContextType);
