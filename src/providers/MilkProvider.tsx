@@ -75,9 +75,14 @@ const MilkProvider = (props) => {
       checklists.map((checklist) => {
         checklist._partition = 'abner';
         checklist.transmitted = true;
-        realm.write(() => {
-          realm.create('Milk', new Milk(checklist));
-        });
+        try {
+          realm.write(() => {
+            realm.create('Milk', new Milk(checklist));
+          });
+        } catch (error) {
+          console.log(error);
+          return;
+        }
       });
     });
   };

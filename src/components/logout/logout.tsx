@@ -1,6 +1,7 @@
-import { useAuth } from 'Providers/AuthProvider';
 import React from 'react';
 import { Button, Alert } from 'react-native';
+
+import { useAuth } from 'Providers/AuthProvider';
 
 export default function Logout({ closeRealm }) {
   const { signOut } = useAuth();
