@@ -10,6 +10,8 @@ export type CheckList = {
   created_at: string;
   updated_at: string;
   __v: number;
+  _partition: any;
+  transmitted: boolean;
 };
 
 export type Farmer = {
@@ -20,3 +22,11 @@ export type Farmer = {
 export type Name = {
   name: string;
 };
+
+export interface MilkContextType {
+  closeRealm: () => void;
+  createChecklists: () => void;
+  deleteMilks: () => void;
+  updateChecklist: (checkList: CheckList) => void;
+  checkLists: CheckList[];
+}
