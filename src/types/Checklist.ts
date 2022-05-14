@@ -1,17 +1,16 @@
 export type CheckList = {
-  _id: number;
+  _id?: number;
   type: string;
-  amount_of_milk_produced: string;
+  amount_of_milk_produced: number;
   farmer: Farmer;
   from: Name;
   to: Name;
-  number_of_cows_head: string;
-  had_supervision: true;
+  number_of_cows_head: number;
+  had_supervision: boolean;
   created_at: string;
   updated_at: string;
-  __v: number;
-  _partition: any;
-  transmitted: boolean;
+  _partition?: any;
+  transmitted?: boolean;
 };
 
 export type Farmer = {
@@ -27,6 +26,6 @@ export interface MilkContextType {
   closeRealm: () => void;
   createChecklists: () => void;
   deleteMilks: () => void;
-  updateChecklist: (checkList: CheckList) => void;
+  updateCheckListsFrontSide: (checkList: CheckList) => void;
   checkLists: CheckList[];
 }

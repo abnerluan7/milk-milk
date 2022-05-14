@@ -9,3 +9,17 @@ export const getAllCheckLists = async (): ResponseSuccess<CheckList[]> => {
     return Promise.reject(err);
   }
 };
+
+export const updateCheckListsServerSide = async (
+  checkList: CheckList
+): ResponseSuccess<{ id: number }> => {
+  let checkListToSend = { ...checkList };
+  delete checkListToSend._id;
+  delete checkListToSend._partition;
+  delete checkListToSend.transmitted;
+  try {
+    return api.put(`${process.env.ROUTE_CHECKLIST}/${checkList._id}`, checkListToSend);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

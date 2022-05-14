@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import Realm, { Configuration } from 'realm';
 import { Milk } from 'Schemas/MilkSchema';
-import { getAllCheckLists } from 'Services/checklist';
+import { getAllCheckLists, updateCheckListsServerSide } from 'Services/checklist';
 import { CheckList, MilkContextType } from 'Types/Checklist';
 
 import { useAuth } from './AuthProvider';
@@ -28,7 +28,13 @@ const MilkProvider = (props) => {
     React.useCallback(() => {
       checkLists.map((checkList) => {
         if (!checkList.transmitted) {
-          console.log(checkList);
+          updateCheckListsServerSide(checkList)
+            .then((response) => {
+              if (response.data.id) {
+                updateCheckListsFrontSide(checkList, true);
+              }
+            })
+            .catch((err) => console.log(err.response));
         }
       });
     }, [netInfo.isInternetReachable, checkLists])
@@ -81,12 +87,12 @@ const MilkProvider = (props) => {
     });
   };
 
-  const updateChecklist = (checklist: CheckList) => {
+  const updateCheckListsFrontSide = (checklist: CheckList, transmitted: boolean = false) => {
     const realm = realmRef.current;
     const checklistToUpdate = realm.objects('Milk').filtered('_id =' + checklist._id)[0];
     realm.write(() => {
-      checklistToUpdate.transmitted = false;
-      checklistToUpdate.had_supervision = !checklist.had_supervision;
+      checklistToUpdate.transmitted = transmitted;
+      checklistToUpdate.had_supervision = checklist.had_supervision;
     });
   };
 
@@ -118,7 +124,7 @@ const MilkProvider = (props) => {
       checklist.push({
         _id: checklistRealmFormat._id,
         type: checklistRealmFormat.type,
-        amount_of_milk_produced: checklistRealmFormat.amount_of_milk_produced,
+        amount_of_milk_produced: parseInt(checklistRealmFormat.amount_of_milk_produced),
         farmer: {
           name: checklistRealmFormat.farmer,
           city: checklistRealmFormat.city,
@@ -129,11 +135,10 @@ const MilkProvider = (props) => {
         to: {
           name: checklistRealmFormat.to_name,
         },
-        number_of_cows_head: checklistRealmFormat.number_of_cows_head,
+        number_of_cows_head: parseInt(checklistRealmFormat.number_of_cows_head),
         had_supervision: checklistRealmFormat.had_supervision,
         created_at: checklistRealmFormat.created_at,
         updated_at: checklistRealmFormat.updated_at,
-        __v: checklistRealmFormat.__v,
         _partition: checklistRealmFormat._partition,
         transmitted: checklistRealmFormat.transmitted,
       });
@@ -147,7 +152,7 @@ const MilkProvider = (props) => {
         closeRealm,
         createChecklists,
         checkLists,
-        updateChecklist,
+        updateCheckListsFrontSide,
         deleteMilks,
       }}>
       {props.children}

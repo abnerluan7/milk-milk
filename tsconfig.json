@@ -9,7 +9,8 @@
       "Types/*": ["types/*"],
       "Providers/*": ["providers/*"],
       "Schemas/*": ["schemas/*"],
-      "Screens/*": ["screens/*"]
+      "Screens/*": ["screens/*"],
+      "Helpers/*": ["helpers/*"]
     }
   },
   "include": ["src/**/*"]

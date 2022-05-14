@@ -1,10 +1,10 @@
 import { Farmer } from 'Types/Checklist';
 
 class Milk {
-  public _id: number;
+  public _id?: number;
   public type: string;
-  public amount_of_milk_produced: string;
-  public number_of_cows_head: string;
+  public amount_of_milk_produced: number;
+  public number_of_cows_head: number;
   public had_supervision: boolean;
   public farmer: Farmer;
   public city: string;
@@ -12,23 +12,23 @@ class Milk {
   public to_name: string;
   public created_at: string;
   public updated_at: string;
-  public transmitted: boolean;
+  public transmitted?: boolean;
 
-  public _partition: any;
+  public _partition?: any;
 
   constructor({
     type,
     amount_of_milk_produced,
     number_of_cows_head,
     had_supervision,
-    _partition,
-    _id,
+    _partition = {},
+    _id = 0,
     farmer,
     from,
     to,
     created_at,
     updated_at,
-    transmitted,
+    transmitted = false,
   }) {
     this._partition = _partition;
     this._id = _id;

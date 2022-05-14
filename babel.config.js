@@ -14,6 +14,7 @@ module.exports = function (api) {
             Providers: './src/providers',
             Schemas: './src/schemas',
             Screens: './src/screens',
+            Helpers: './src/helpers',
           },
         },
       ],

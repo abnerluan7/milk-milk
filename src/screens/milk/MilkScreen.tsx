@@ -7,13 +7,15 @@ import { CheckList } from 'Types/Checklist';
 
 import { Logout } from 'Components';
 
-export function MilksView() {
+export function MilksScreen() {
   const navigation = useNavigation();
 
-  const { checkLists, closeRealm, createChecklists, deleteMilks, updateChecklist } = useMilks();
+  const { checkLists, closeRealm, createChecklists, deleteMilks, updateCheckListsFrontSide } =
+    useMilks();
 
-  const onClickMilk = (milk: CheckList) => {
-    updateChecklist(milk);
+  const onClickMilk = (checklist: CheckList) => {
+    checklist.had_supervision = !checklist.had_supervision;
+    updateCheckListsFrontSide(checklist);
   };
 
   React.useLayoutEffect(() => {
@@ -24,7 +26,7 @@ export function MilksView() {
   }, [navigation]);
 
   useEffect(() => {
-    console.log(JSON.stringify(checkLists, null, 2));
+    //console.log(JSON.stringify(checkLists, null, 2));
   });
 
   return (
