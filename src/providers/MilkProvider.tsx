@@ -1,10 +1,17 @@
 import { useNetInfo } from '@react-native-community/netinfo';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import Realm, { Configuration } from 'realm';
-import { Milk } from 'Schemas/MilkSchema';
+import Realm from 'realm';
+
+import { makeDBConfig } from 'Libs/db';
+
 import { getAllCheckLists, updateCheckListsServerSide } from 'Services/checklist';
+
 import { CheckList, MilkContextType } from 'Types/Checklist';
+
+import { Milk } from 'Schemas/MilkSchema';
+
+import { reformatChecklist } from 'Helpers/FormatData';
 
 import { useAuth } from './AuthProvider';
 
@@ -45,20 +52,8 @@ const MilkProvider = (props) => {
       console.error('Null user? Needs to log in!');
       return;
     }
-    const OpenRealmBehaviorConfiguration = {
-      type: 'openImmediately',
-    };
-    const config: Configuration = {
-      schema: [Milk.schema],
-      sync: {
-        user: user,
-        partitionValue: `${user.id}`,
-        newRealmFileBehavior: OpenRealmBehaviorConfiguration,
-        existingRealmFileBehavior: OpenRealmBehaviorConfiguration,
-      },
-    };
 
-    Realm.open(config).then((realm) => {
+    Realm.open(makeDBConfig(user)).then((realm) => {
       realmRef.current = realm;
       const syncMilks = realm.objects('Milk');
       let sortedMilks = syncMilks.sorted('number_of_cows_head');
@@ -116,34 +111,6 @@ const MilkProvider = (props) => {
       setMilks([]);
       setCheckLists([]);
     }
-  };
-
-  const reformatChecklist = (checklistsRealmFormat): CheckList[] => {
-    const checklist: CheckList[] = [];
-    checklistsRealmFormat.map((checklistRealmFormat) => {
-      checklist.push({
-        _id: checklistRealmFormat._id,
-        type: checklistRealmFormat.type,
-        amount_of_milk_produced: parseInt(checklistRealmFormat.amount_of_milk_produced),
-        farmer: {
-          name: checklistRealmFormat.farmer,
-          city: checklistRealmFormat.city,
-        },
-        from: {
-          name: checklistRealmFormat.from_name,
-        },
-        to: {
-          name: checklistRealmFormat.to_name,
-        },
-        number_of_cows_head: parseInt(checklistRealmFormat.number_of_cows_head),
-        had_supervision: checklistRealmFormat.had_supervision,
-        created_at: checklistRealmFormat.created_at,
-        updated_at: checklistRealmFormat.updated_at,
-        _partition: checklistRealmFormat._partition,
-        transmitted: checklistRealmFormat.transmitted,
-      });
-    });
-    return checklist;
   };
 
   return (
